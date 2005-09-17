@@ -1,0 +1,114 @@
+<project name="espumito-full" basedir="." default="build">
+
+	<property environment="env" />
+
+	<!--
+    Ac� a va la parte customizada para el modulo
+    -->
+
+
+	<!--
+    Fin de la parte customizada para el modulo
+    -->
+
+	<property name="project.name" value="espumito-full" />
+	<property name="projects.home" value="${env.PROJECTS_HOME}" />
+	<property file="${basedir}/espumito-full.properties" />
+	<property file="${basedir}/securityfilter.properties" />
+	<property file="${projects.home}/common.properties" />
+	<property file="${projects.home}/xdoclet.properties" />
+	<property file="${projects.home}/blah-j2ee.properties" />
+
+	<path id="project.custom.classpath">
+		<!-- Agregar librerias y classes propias del proyecto aqui -->
+	</path>
+
+	<path id="project.classpath.compile">
+		<pathelement location="${bin.dir}" />
+		<pathelement location="${j2ee.lib.dir}/j2ee.jar" />
+		<pathelement location="${log4j.lib.dir}/log4j-1.2.8.jar" />
+		<pathelement location="${junit.lib.dir}/junit.jar" />
+		<pathelement location="${blah-j2ee.lib.dir}/blah-j2ee-ejb.jar" />
+		<pathelement location="${blah-j2ee.lib.dir}/blah-j2ee-client.jar" />
+	</path>
+
+	<path id="xdoclet.classpath">
+		<path refid="project.classpath.compile" />
+		<fileset dir="${xdoclet.lib.dir}">
+			<include name="*.jar" />
+			<exclude name="xdoclet-module-jboss-net-*.jar" />
+		</fileset>
+		<fileset dir="${xdoclet.lib.dir}">
+			<include name="xdoclet-module-jboss-net-${jboss.net.version}*.jar" />
+		</fileset>
+	</path>
+
+	<fileset id="spring.lib.fileset" dir="${spring.lib.dir}" includes="spring.jar, spring-hibernate.jar" />
+	<fileset id="spring.lib.dep.jakarta-commons.fileset" dir="${spring.lib.deps.dir}/jakarta-commons" includes="commons-dbcp.jar,commons-pool.jar" />
+
+	<target name="compile" depends="generate" description="Compiles all sources, including generated ones.">
+		<mkdir dir="${bin.dir}" />
+		<javac srcdir="src" destdir="${bin.dir}" classpathref="project.classpath.compile" debug="true" debuglevel="source" deprecation="true" listfiles="true" />
+	</target>
+
+	<target name="generate" description="Generates sources.">
+		<mkdir dir="${generated.dir}" />
+	</target>
+
+	<target name="javadoc" depends="generate" description="Generates JavaDoc documentation.">
+		<mkdir dir="${javadoc.dir}" />
+		<javadoc destdir="${javadoc.dir}">
+			<fileset dir="${src.dir}" includes="**/*.java" />
+			<fileset dir="${gen-src.dir}" includes="**/*.java" />
+		</javadoc>
+	</target>
+
+	<target name="build" depends="compile,build-war" description="Produces distributable JARs and WARs.">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${tmp.dir}" />
+		<copy todir="${tmp.dir}" file="${projects.home}/espumito-core/build/espumito_core.jar" />
+		<jar file="${tmp.dir}/espumito_core.jar" update="true">
+			<manifest>
+				<attribute name="Class-Path" value="blah-j2ee.jar spring.jar spring-hibernate.jar commons-dbcp.jar commons-pool.jar" />
+			</manifest>
+		</jar>
+		<ear destfile="${build.dir}/espumito.ear" appxml="${src.dir}/META-INF/application.xml">
+			<fileset dir="${tmp.dir}" includes="espumito_core.jar,espumito.war" />
+			<fileset dir="${projects.home}/blah-j2ee/build" includes="blah-j2ee.jar" />
+			<fileset dir="${projects.home}/blah-j2ee/build" includes="blah-j2ee.jar" />
+			<fileset refid="spring.lib.fileset" />
+			<fileset refid="spring.lib.dep.jakarta-commons.fileset" />
+			<fileset dir="${hibernate.lib.dir}" includes="hibernate2.jar" />
+		</ear>
+		<delete dir="${tmp.dir}" />
+	</target>
+
+	<target name="build-war" description="Creates a .WAR file with all included modules">
+		<mkdir dir="${tmp.dir}" />
+		<war destfile="${tmp.dir}/espumito.war" webxml="WEB-INF/web.xml">
+			<zipfileset dir="${web.content.dir}" includes="**/*.jsp,**/*.html,**/*.gif,**/*.jpg,**/*.css" />
+			<zipfileset dir="WEB-INF" prefix="WEB-INF" includes="**/*.xml,**/*.tld" excludes="web.xml" />
+			<zipfileset dir="${src.dir}" includes="**/*.properties" prefix="WEB-INF/classes" />
+
+			<zipfileset dir="${espumito-core.web-content.dir}" includes="**/*" prefix="core" />
+			<zipfileset dir="${espumito-core.web-inf.dir}" includes="struts-config.xml" prefix="WEB-INF/core" />
+
+			<zipfileset dir="${struts.lib.dir}" includes="*.jar" prefix="WEB-INF/lib" />
+			<zipfileset dir="${securityfilter.lib.dir}" includes="*.jar" prefix="WEB-INF/lib" />
+			<zipfileset dir="${espumito-core.home}/bin"
+                includes="**/*.class,**/*.xml,**/*.properties"
+                prefix="WEB-INF/classes">
+			</zipfileset>
+			<manifest>
+				<attribute name="Class-Path" value="blah-j2ee.jar spring.jar spring-hibernate.jar commons-dbcp.jar commons-pool.jar" />
+			</manifest>
+		</war>
+	</target>
+
+	<target name="clean" description="Deletes all generated files and directories.">
+		<delete dir="${build.dir}" />
+		<delete dir="${bin.dir}" />
+		<delete dir="${javadoc.dir}" />
+		<delete dir="${generated-files.dir}" />
+	</target>
+</project>

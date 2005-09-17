@@ -1,0 +1,167 @@
+body
+{
+	background-color: #FFFFFF;
+	font-family: Tahoma, Arial, "Times New Roman";
+	font-size: 12px;
+	color: #333333;
+}
+
+a, a:link, a:visited, a:hover
+{
+	color: #006699;
+	text-decoration: none;
+}
+
+h1, h2, h3, h4, h5
+{
+	font-family: Arial,sans-serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+h1 {font-size: 18px; color: #334d55; }
+h2 {font-size: 16px; color: #006699; }
+h3 {font-size: 14px; color: #334d55; }
+h4 {font-size: 12px; color: #334d55; }
+h5 {font-size: 12px; font-weight: bold;	color: #333333; }
+
+.siteHeader
+{
+    width: 100%;
+    background-image: url(/images/header-bkg.gif);
+}
+
+.siteTitle { font-size: 22px; font-weight: bold; }
+.siteTitle a, .siteTitle a:link, .siteTitle a:visited, .siteTitle a:hover { color: black; }
+
+.navBar { vertical-align: top; }
+
+.content
+{
+    width: 100%;
+    vertical-align: top;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.sectionMenu
+{
+    width: 100%;
+	padding-bottom: 10px;
+    border-bottom: 1px solid #999;
+}
+
+.sectionMenu #menuItems { text-align: right; }
+
+.newItem { background: green; color: white; font-weight: bold;}
+
+.footer
+{
+    clear: both;
+	background-image:url(/images/footer-bkg.gif);
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    color: #cccccc;
+    padding: 10px 10px 10px 10px;
+}
+
+#news
+{
+	border: 1px solid #ccc;
+	padding: 2px;
+}
+#news #title, #reflexion #title { font-size: 14px; font-weight: bolder; }
+#news #editionNote { color: #0000FF; }
+
+/* Tablas para listas */
+
+table.basicList { width: 100%; text-align:left; border: 1px solid #D9EDFF; }
+table.basicList th, table.basicList td
+{
+	font-size: 12px;
+	text-align: left;
+}
+table.basicList th
+{ 
+	text-align: center;
+	background-color: #D9EDFF;
+}
+table.basicList td
+{
+	margin-left: 10px;
+	margin-right: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #cccccc;
+}
+
+
+table.heavyList { width: 100%; border: 2px solid #D9EDFF ;}
+table.heavyList th, table.heavyList td
+{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+table.heavyList th
+{ 
+	text-align: center;
+	background-color: #D9EDFF;
+}
+/*table.heavyList td { background-color: #F6F6F4; }*/
+
+/* Formularios */
+
+form, select, input, textarea { margin:0px; padding:0px; }
+.formFieldError { color: red; font-weight: bold; }
+form .label { font-weight: bold; text-align: right; vertical-align:top;}
+
+/* ------ */
+/* Varios */
+/* ------ */
+.layout { width: 100%; }
+.username { font-weight: bold; color: green; }
+#signature, #author { font-style: italic; text-indent: 10px; }
+#reflexion { text-align: justify; text-indent: 20px; }
+
+
+/*
+	Acciones sobre items: threads de foros, noticias, etc.
+   	Usualmente se muestran como una barra.
+*/
+.actions
+{
+	width: 100%;
+	/*background-color: #eee;*/
+	display: block;
+	text-align: right;
+	padding: 2px;
+}
+.action, .action .title
+{
+	font-size: 11px;
+	font-weight: bold;
+	background-color: #eee; 
+	border-bottom: 1px solid #666;
+}
+
+.odd { background-color: #EAEAE7; }
+.even { background-color: #F6F6F4; }
+
+.menu { width: 150px; border-bottom: 1px solid #aaa; }
+.menu #title
+{
+	border-bottom: 1px solid #666;
+	border-right: 1px solid #666;
+	background: #ccc;
+	text-align: left;
+	padding: 4px 4px 4px 4px;
+}
+
+.menu #title a { color: black; }
+.menu #item
+{
+	padding-left: 5px;
+	background: #eee;
+	border-right: 1px solid #aaa;
+}
+.menu #item a { text-decoration: none; display: block; }
+.menu #item a:hover { background-color: #fff; }

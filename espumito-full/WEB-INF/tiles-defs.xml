@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE component-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://struts.apache.org/dtds/tiles-config_1_1.dtd" >
+<component-definitions>
+	<definition name="basic" page="/layout/basicLayout.jsp">
+		<put name="header" value="/header.jsp"></put>
+		<put name="menu" value="/menu.jsp"></put>
+		<put name="footer" value="/footer.jsp"></put>
+	</definition>
+	<definition name="default.defaultLayout" extends="basic">
+		<put name="body" value="/main.jsp"></put>
+	</definition>
+</component-definitions>
