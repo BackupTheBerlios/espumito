@@ -1,0 +1,125 @@
+<project name="blah-j2ee" basedir="." default="build">
+
+    <property environment="env"/>
+    <property name="project.name" value="blah-j2ee"/>   
+    <property name="projects.home" value="c:/proyectos"/>
+    <property file="${projects.home}/common.properties"/>
+    <property file="${projects.home}/xdoclet.properties"/>
+    <property file="${projects.home}/blah-j2ee.properties"/>
+
+	<path id="project.custom.classpath">
+		<!-- Agregar librerias y classes propias del proyecto aqui -->
+	</path>
+	
+	<path id="project.classpath.compile">
+        <pathelement location="${bin.dir}"/>
+        <pathelement location="${j2ee.lib.dir}/j2ee.jar"/>
+        <pathelement location="${log4j.lib.dir}/log4j-1.2.8.jar"/>
+        <pathelement location="${junit.lib.dir}/junit.jar"/>
+        <pathelement location="${blah-j2ee.lib.dir}/blah-j2ee-ejb.jar"/>
+        <pathelement location="${blah-j2ee.lib.dir}/blah-j2ee-client.jar"/>
+        <pathelement location="${hibernate.lib.dir}/hibernate2.jar"/>
+	</path>
+ 
+    <fileset dir="${src.dir}" id="hibernate-fileset">
+        <include name="ar/org/blah/j2ee/domain/**/*Bean.java"/>
+    </fileset>
+ 
+    <fileset dir="${src.dir}" id="ejb.interfaces.fileset">
+        <exclude name="ar/org/blah/j2ee/GenericSessionBean.java"/>   
+    </fileset>   
+ 
+    <taskdef
+        classpathref="xdoclet.classpath"   
+        classname="xdoclet.modules.hibernate.HibernateDocletTask"
+        name="hibernatedoclet"/>
+    <taskdef
+        classpathref="xdoclet.classpath"
+        classname="xdoclet.modules.ejb.EjbDocletTask" name="ejbdoclet" />
+    <taskdef
+        classpathref="xdoclet.classpath"
+        classname="xdoclet.modules.web.WebDocletTask" name="webdoclet" />
+		
+	<path id="xdoclet.classpath">
+        <path refid="project.classpath.compile" />
+        <fileset dir="${xdoclet.lib.dir}">
+            <include name="*.jar" />
+            <exclude name="xdoclet-module-jboss-net-*.jar" />
+        </fileset>
+        <fileset dir="${xdoclet.lib.dir}">
+            <include name="xdoclet-module-jboss-net-${jboss.net.version}*.jar" />
+        </fileset>
+    </path>
+	
+    <target name="compile" depends="generate" description="Compiles all sources, including generated ones.">
+		<mkdir dir="${bin.dir}"/>
+		<javac
+			srcdir="src"
+			destdir="${bin.dir}"
+			classpathref="project.classpath.compile"
+			debug="true"
+			debuglevel="source"
+			deprecation="true"
+			listfiles="true"/>
+    </target>
+	
+	<target name="generate" description="Generates sources.">
+		<mkdir dir="${generated.dir}"/>
+        <antcall target="generate-hibernate"/>
+        <antcall target="generate-ejb"/>
+	</target>
+     
+    <target name="generate-hibernate" description="Generates hibernate mappings">
+        <mkdir dir="${hibernate.gen-src.dir}"/>   
+        <hibernatedoclet
+            destdir="${hibernate.gen-src.dir}"
+            force="false"
+            mergedir="${hibernate.merge.dir}"
+            verbose="false">            
+            <fileset refid="hibernate-fileset"/>
+            <hibernate version="2.0" mergeDir="${hibernate.merge.dir}"/>
+        </hibernatedoclet>
+    </target>   
+             
+    <target name="generate-ejb" description="Generates EJB interfaces and descriptors">
+        <mkdir dir="${gen-src.dir}"/>   
+        <ejbdoclet
+            ejbSpec="2.0"
+            destDir="${gen-src.dir}"
+            verbose="true"
+            mergeDir="${merge.dir}">
+            <fileset refid="ejb.interfaces.fileset"/>
+            <remoteinterface
+                acceptAbstractClasses="false" 
+                templateFile="${template.dir}/remote.xdt"/>
+            <homeinterface 
+                acceptAbstractClasses="false" 
+                templateFile="${template.dir}/home.xdt"/>
+         </ejbdoclet>   
+    </target>   
+    
+    <target name="javadoc" depends="generate" description="Generates JavaDoc documentation.">
+		<mkdir dir="${javadoc.dir}"/>
+        <javadoc destdir="${javadoc.dir}">
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+            <fileset dir="${gen-src.dir}" includes="**/*.java"/>
+        </javadoc>
+    </target>
+    
+    <target
+    	name="build"
+    	depends="compile"
+    	description="Produces distributable JARs and WARs.">
+        <mkdir dir="${build.dir}"/>   
+        <jar destfile="${distributable.filename}">
+            <fileset dir="${bin.dir}" includes="**/*.class"/>
+        </jar>
+    </target>
+    
+    <target name="clean" description="Deletes all generated files and directories.">
+		        <delete dir="${build.dir}"/>
+		        <delete dir="${bin.dir}"/>
+        <delete dir="${javadoc.dir}"/>
+        <delete dir="${generated-files.dir}"/>
+    </target>
+</project>
