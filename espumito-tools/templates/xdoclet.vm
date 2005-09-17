@@ -1,0 +1,20 @@
+	<path id="xdoclet.classpath">
+        <path refid="project.classpath" />
+        <fileset dir="${xdoclet.basedir}">
+            <include name="*.jar" />
+            <exclude name="xdoclet-module-jboss-net-*.jar" />
+        </fileset>
+        <fileset dir="${xdoclet.basedir}">
+            <include name="xdoclet-module-jboss-net-${jboss.net.version}*.jar" />
+        </fileset>
+    </path>
+
+    <taskdef
+        classpathref="xdoclet.classpath"
+        classname="xdoclet.modules.ejb.EjbDocletTask" name="ejbdoclet" />
+    <taskdef
+        classpathref="xdoclet.classpath"
+        classname="xdoclet.modules.web.WebDocletTask" name="webdoclet" />
+    <taskdef
+        classpathref="xdoclet.classpath"
+        classname="xdoclet.modules.hibernate.HibernateDocletTask" name="hibernatedoclet" />

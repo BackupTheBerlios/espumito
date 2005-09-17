@@ -1,0 +1,236 @@
+<project name="espumito-core" basedir="." default="build">
+
+    <property environment="env"/>
+ 
+    <!--
+    Acá va la parte customizada para el modulo
+    -->
+ 
+    
+    <!--
+    Fin de la parte customizada para el modulo
+    -->
+   
+    <property name="projects.home" value="${env.PROJECTS_HOME}"/>
+    <property file="${basedir}/espumito-core.properties"/>   
+    <property file="${projects.home}/common.properties"/>
+    <property file="${projects.home}/xdoclet.properties"/>
+    <property file="${projects.home}/blah-j2ee.properties"/>
+	
+	<path id="project.classpath.compile">
+        <pathelement location="${bin.dir}"/>
+        <pathelement location="${j2ee.lib.dir}/j2ee.jar"/>
+        <pathelement location="${log4j.lib.dir}/log4j-1.2.8.jar"/>
+        <pathelement location="${junit.lib.dir}/junit.jar"/>
+        <pathelement location="${blah-j2ee.lib.dir}/blah-j2ee.jar"/>
+        <pathelement location="${struts.lib.dir}/struts.jar"/>
+        <pathelement location="${hibernate.lib.dir}/hibernate2.jar"/>      
+        <pathelement location="${hivemind.lib.dir}/hivemind-1.0.jar"/>      
+	</path>
+		
+	<path id="xdoclet.classpath">
+        <path refid="project.classpath.compile" />
+        <fileset dir="${xdoclet.lib.dir}">
+            <include name="*.jar" />
+            <exclude name="xdoclet-module-jboss-net-*.jar" />
+        </fileset>
+        <fileset dir="${xdoclet.lib.dir}">
+            <include name="xdoclet-module-jboss-net-${jboss.net.version}*.jar"/>
+        </fileset>
+    </path>
+ 
+ 
+    <fileset dir="${src.dir}" id="hibernate-fileset">
+        <include name="ar/com/espumito/security/domain/**/*Bean.java"/>
+        <include name="ar/com/espumito/security/domain/**/*BeanImpl.java"/>
+    </fileset>
+ 
+    <fileset dir="${hibernate.gen-src.dir}" id="hibernate.generated.files" includes="**/*.hbm.xml"/>   
+ 
+    <filelist dir="${src.dir}" id="ejb.interfaces.fileset">
+    </filelist>   
+
+    <fileset dir="${hibernate.lib.dir}/lib" id="hibernate-libs">
+        <include name="cglib2.jar"/>
+        <include name="commons-collections.jar"/>
+        <include name="commons-logging.jar"/>
+        <include name="dom4j.jar"/>
+        <include name="odmg.jar"/>
+        <include name="ehcache.jar"/>
+    </fileset>
+   
+    <taskdef
+        classpathref="xdoclet.classpath"   
+        classname="xdoclet.modules.hibernate.HibernateDocletTask"
+        name="hibernatedoclet"/>
+    <taskdef
+        classpathref="xdoclet.classpath"
+        classname="xdoclet.modules.ejb.EjbDocletTask" name="ejbdoclet" />
+    <taskdef
+        classpathref="xdoclet.classpath"
+        classname="xdoclet.modules.web.WebDocletTask" name="webdoclet" />
+
+    <target name="prepare-compile" description="Prepares directories for compilation">
+        <mkdir dir="${bin.dir}"/>
+    </target>   
+    
+    <target
+        name="compile"
+        depends="prepare-compile,generate"
+        description="Compiles all sources, including generated ones.">
+		<javac
+			destdir="${bin.dir}"
+			classpathref="project.classpath.compile"
+			debug="true"
+			debuglevel="source"
+			deprecation="true"
+			listfiles="true">
+            <src path="${src.dir}"/>
+            <src path="${gen-src.dir}"/>         
+        </javac>   
+    </target>
+ 
+    <target name="compile-common"
+        depends="prepare-compile,generate"
+        description="Compiles classes common to all modules.">
+        <javac
+            destdir="${bin.dir}"
+            classpathref="project.classpath.compile"
+            debug="true"
+            debuglevel="source"
+            deprecation="true"
+            listfiles="true">
+            <src id="src.common" dir="${src.dir}">
+                <include name="ar/com/espumito/util/**/*.java"/>   
+            </src>
+        </javac>   
+    </target>
+	
+    <target
+        name="build"
+        depends="compile"
+        description="Generates distributable JARs and WARs">
+        <mkdir dir="${build.dir}"/>   
+        <jar destfile="${build.dir}/espumito_core.jar">
+            <zipfileset dir="${bin.dir}">
+                <include name="**/*"/>   
+            </zipfileset>
+            <fileset refid="hibernate.generated.files"/>
+            <zipfileset dir="${gen-meta-inf.dir}" prefix="META-INF">
+                <include name="**/jboss.xml"/>
+                <include name="**/ejb-jar.xml"/>
+            </zipfileset>
+        </jar>
+    </target>
+ 
+    <target name="build-hibernate-sar">
+        <jar destfile="${build.dir}/${hibernate.jboss-service.filename}">
+            <fileset refid="hibernate.generated.files"/>
+            <fileset dir="${hibernate.lib.dir}">
+                <include name="hibernate2.jar"/>
+            </fileset>   
+            <fileset refid="hibernate-libs"/>
+            <metainf dir="${gen-meta-inf.dir}">
+                <include name="jboss-service.xml"/>
+            </metainf>
+        </jar>
+    </target>
+   
+    <target name="generate" description="Generates sources.">
+        <mkdir dir="${generated.dir}"/>
+        <mkdir dir="${gen-src.dir}"/>
+        <antcall target="generate-hibernate"/>
+        <antcall target="generate-ejb"/>
+    </target>
+     
+    <target name="generate-hibernate" description="Generates hibernate mappings">
+        <mkdir dir="${hibernate.gen-src.dir}"/>   
+        <hibernatedoclet
+            destdir="${hibernate.gen-src.dir}"
+            force="true"
+            mergedir="${hibernate.merge.dir}"
+            verbose="false">            
+            <fileset refid="hibernate-fileset"/>
+            <hibernate version="2.0" mergeDir="${hibernate.merge.dir}"/>
+            <jbossservice
+                destdir="${gen-meta-inf.dir}"
+                serviceName="espumito-core-hibernate"
+                jndiName="${hibernate.jndi.name}"
+                dataSource="${hibernate.datasource.name}"
+                dialect="${hibernate.dialect}"
+                useOuterJoin="true"
+                showSql="true"
+                transactionManagerStrategy="net.sf.hibernate.transaction.JBossTransactionManagerLookup"
+                transactionStrategy="net.sf.hibernate.transaction.JTATransactionFactory"
+                userTransactionName="UserTransaction">
+            </jbossservice>
+        </hibernatedoclet>
+    </target>   
+
+ 
+    <target name="generate-ejb" description="Generates EJB interfaces and descriptors">
+        <mkdir dir="${gen-meta-inf.dir}"/>
+        <fileset id="allSessionBeans" dir="${src.dir}">
+            <include name="ar/com/espumito/security/services/*SessionBean.java" />
+        </fileset>
+        <fileset id="springSessionBeans" dir="${src.dir}">
+            <include name="ar/com/espumito/security/services/SecuritySvcSessionBean.java" />
+        </fileset>
+        <fileset id="noSpringSessionBeans" dir="${src.dir}">
+            <include name="ar/com/espumito/security/services/*SessionBean.java" />
+            <exclude name="ar/com/espumito/security/services/SecuritySvcSessionBean.java" />
+        </fileset>
+        <ejbdoclet
+            ejbSpec="2.0"
+            destDir="${gen-src.dir}"
+            verbose="true"
+            mergedir="${merge.dir}">
+            <fileset refid="springSessionBeans"/>
+            <remoteinterface acceptAbstractClasses="false" templateFile="${template.dir}/remote4spring.xdt"/>
+            <homeinterface acceptAbstractClasses="false" templateFile="${template.dir}/home.xdt"/>
+            <localinterface acceptAbstractClasses="false" templateFile="${template.dir}/local.xdt"/>
+            <localhomeinterface acceptAbstractClasses="false" templateFile="${template.dir}/home-local.xdt"/>
+        </ejbdoclet>
+        <ejbdoclet
+            ejbSpec="2.0"
+            destDir="${gen-src.dir}"
+            verbose="true"
+            mergedir="${merge.dir}">
+            <fileset refid="noSpringSessionBeans"/>
+            <remoteinterface acceptAbstractClasses="false" templateFile="${template.dir}/remote.xdt"/>
+            <homeinterface acceptAbstractClasses="false" templateFile="${template.dir}/home.xdt"/>
+            <localinterface acceptAbstractClasses="false" templateFile="${template.dir}/local.xdt"/>
+            <localhomeinterface acceptAbstractClasses="false" templateFile="${template.dir}/home-local.xdt"/>
+        </ejbdoclet>
+        <ejbdoclet
+            ejbSpec="2.0"
+            destDir="${gen-src.dir}"
+            verbose="true"
+            mergedir="${merge.dir}">
+            <fileset refid="allSessionBeans"/>
+            <deploymentdescriptor destDir="${gen-meta-inf.dir}"/>
+            <jboss version="3.0"
+                unauthenticatedPrincipal="guest"
+                xmlencoding="UTF-8"
+                destdir="${gen-meta-inf.dir}"
+                validatexml="false"
+                acceptAbstractClasses="false"/>
+        </ejbdoclet>
+    </target>      
+    
+    <target name="javadoc" depends="generate" description="Generates JavaDoc documentation.">
+		<mkdir dir="${javadoc.dir}"/>
+        <javadoc destdir="${javadoc.dir}">
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+            <fileset dir="${gen-src.dir}" includes="**/*.java"/>
+        </javadoc>
+    </target>
+    
+    <target name="clean" description="Deletes all generated files and directories.">
+		        <delete dir="${build.dir}"/>
+		        <delete dir="${bin.dir}"/>
+        <delete dir="${javadoc.dir}"/>
+        <delete dir="${generated.dir}"/>
+        <delete dir="${build.dir}"/>
+    </target>
+</project>

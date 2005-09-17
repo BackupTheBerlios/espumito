@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts 
+    Configuration 1.2//EN" 
+    "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<form-beans>
+		<form-bean name="recoverPassword"
+			type="ar.com.espumito.security.web.RecoverPasswordForm" />
+		<form-bean name="register"
+			type="ar.com.espumito.security.web.RegisterUserForm" />
+		<form-bean name="editUser"
+			type="ar.com.espumito.security.web.EditUserForm" />
+	</form-beans>
+	<global-forwards>
+		<forward name="failure" path="/standardError.jsp" />
+	</global-forwards>
+	<action-mappings>
+		<action scope="request" path="/security/register"
+			type="ar.com.espumito.security.web.RegisterUserAction"
+			name="register" input="/security/register.jsp" validate="true">
+			<forward name="success"
+				path="/security/registerSuccess.jsp" />
+		</action>
+		<action scope="request" path="/security/logout"
+			type="ar.com.espumito.security.web.LogoutAction" validate="false">
+			<forward name="success" path="/index.jsp" />
+		</action>
+		<action scope="request" path="/security/admin/usersAdmin"
+			type="ar.com.espumito.security.web.ListUsersAction"
+			validate="false">
+			<forward name="success"
+				path="/security/admin/usersAdmin.jsp" />
+		</action>
+		<action scope="request" path="/security/admin/editUserStep1"
+			type="ar.com.espumito.security.web.EditUserFillFormAction"
+			name="editUser" input="/security/admin/editUser.jsp"
+			validate="false">
+			<forward name="success" path="/security/admin/editUser.jsp" />
+		</action>
+		<action scope="request" path="/security/admin/editUserStep2"
+			type="ar.com.espumito.security.web.EditUserAction" name="editUser"
+			input="/security/admin/editUser.jsp" validate="true">
+			<forward name="success"
+				path="/security/admin/usersAdmin.do" />
+		</action>
+		<action scope="request" path="/recoverPassword"
+			type="ar.com.espumito.security.web.RecoverPasswordAction"
+			name="recoverPassword" validate="false">
+			<forward name="success"
+				path="/registration/passwordSent.jsp" />
+		</action>
+	</action-mappings>
+	<message-resources parameter="ar.com.espumito.web.SecurityResources"
+		null="false" key="security" />
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config"
+			value="/WEB-INF/tiles-defs.xml" />
+		<set-property property="moduleAware" value="true" />
+	</plug-in>
+</struts-config>

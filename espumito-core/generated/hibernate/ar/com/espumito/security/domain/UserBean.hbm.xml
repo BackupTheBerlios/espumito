@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="ar.com.espumito.security.domain.UserBean"
+        table="users"
+        dynamic-update="false"
+        dynamic-insert="false"
+    >
+
+        <id
+            name="id"
+            column="id"
+            type="long"
+        >
+            <generator class="increment">
+            </generator>
+        </id>
+
+        <property
+            name="displayName"
+            type="string"
+            update="true"
+            insert="true"
+            column="display_name"
+        />
+
+        <property
+            name="email"
+            type="string"
+            update="true"
+            insert="true"
+            column="email"
+        />
+
+        <property
+            name="enabledChar"
+            type="string"
+            update="true"
+            insert="true"
+            column="enabled"
+        />
+
+        <property
+            name="firstName"
+            type="string"
+            update="true"
+            insert="true"
+            column="first_name"
+        />
+
+        <property
+            name="lastName"
+            type="string"
+            update="true"
+            insert="true"
+            column="last_name"
+        />
+
+        <property
+            name="password"
+            type="string"
+            update="true"
+            insert="true"
+            column="password"
+        />
+
+        <property
+            name="registrationDate"
+            type="timestamp"
+            update="true"
+            insert="true"
+            column="registration_date"
+        />
+
+        <set
+            name="roles"
+            table="user_roles"
+            lazy="false"
+            inverse="false"
+            cascade="none"
+            sort="unsorted"
+        >
+
+              <key
+                  column="user_id"
+              />
+
+              <many-to-many
+                  class="ar.com.espumito.security.domain.RoleBean"
+                  column="role_id"
+                  outer-join="auto"
+              />
+
+        </set>
+
+        <property
+            name="username"
+            type="string"
+            update="true"
+            insert="true"
+            column="username"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-UserBean.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+</hibernate-mapping>
