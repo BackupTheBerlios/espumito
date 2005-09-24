@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project name="espumito-huergo" basedir="." default="build">
 
     <property environment="env"/>
     
     <!--
-    Acá va la parte customizada para el modulo
+    Acï¿½ va la parte customizada para el modulo
     -->
  
     
@@ -13,10 +14,11 @@
     
     <property name="project.name" value="espumito-huergo"/>   
     <property name="projects.home" value="../"/>
+    <property name="tools.home" value="${projects.home}/espumito-tools"/>
     <property file="${basedir}/espumito-huergo.properties"/>
-    <property file="${projects.home}/common.properties"/>
-    <property file="${projects.home}/xdoclet.properties"/>
-    <property file="${projects.home}/blah-j2ee.properties"/>
+    <property file="${tools.home}/common.properties"/>
+    <property file="${tools.home}/xdoclet.properties"/>
+    <property file="${tools.home}/blah-j2ee.properties"/>
 
 	<path id="project.custom.classpath">
 		<!-- Agregar librerias y classes propias del proyecto aqui -->
