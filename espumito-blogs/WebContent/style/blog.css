@@ -1,0 +1,137 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	background-color: black;
+	font-family: Tahoma, Arial, "Times New Roman";
+	font-size: 10px;
+	color: silver;
+}
+
+table,tr,td,th {
+	font-size: 10px;
+	color: silver;
+}
+
+a,a:link,a:visited,a:hover {
+	font-size: 10px;
+	text-decoration: none;
+	display: block;
+}
+
+a,a:link,a:visited {
+	color: green;
+}
+
+a:hover {
+	color: lime;
+}
+
+h1,h2,h3,h4,h5 {
+	font-family: Arial, sans-serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+h1 {
+	font-size: 18px;
+	color: #334d55;
+}
+
+h2 {
+	font-size: 16px;
+	color: #006699;
+}
+
+h3 {
+	font-size: 14px;
+	color: #334d55;
+}
+
+h4 {
+	font-size: 12px;
+	color: #334d55;
+}
+
+h5 {
+	font-size: 12px;
+	font-weight: bold;
+	color: #333333;
+}
+
+.body {
+	padding: 10px 10px 10px 10px;
+	width: 100%;
+}
+
+.navMenu { /*	background-color: silver;*/
+	width: 150px;
+}
+
+.navMenu #title {
+	color: #FF9933;
+	font-size: 14px;
+	font-weight: bold;;
+	font-size: 14px;
+}
+
+.navMenu #item {
+	text-align: right;
+}
+
+.footer {
+	color: purple;
+	font-style: italic;
+}
+
+.quote {
+	font-size: 12px;
+}
+
+.quote .reference {
+	font-style: italic;
+	text-align: right;
+}
+
+.quote .reference .author {
+	font-weight: bold;
+}
+
+.header h1 {
+	color: #FF9933;
+}
+
+form .label {
+	font-weight: bold;
+	font-size: 10px;
+}
+
+form,form input,form submit,form button,form select {
+	font-family: Tahoma, Arial, "Times New Roman";
+	font-size: 10px;
+}
+
+.formFieldError {
+	color: red;
+	font-weight: bold;
+}
+
+.blogEntry {
+	font-size: 10px;
+	border-bottom: 1px solid red;
+	color: yellow;
+	padding: 5px;
+}
+
+.blogEntryComments {
+	font-size: 10px;
+}
+
+.blogEntry .title,.blogEntryComments .title {
+	font-size: 11px;
+}
+
+.blogEntryComments .comment {
+	border-bottom: 1px dashed silver;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}

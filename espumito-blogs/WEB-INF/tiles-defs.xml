@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<tiles-definitions>
+    <definition name="blog" extends="basic">
+    </definition>
+    <definition name="home" extends="blog">
+        <put name="body" value="/home.jsp"/>
+    </definition>
+    <definition name="searchBlogs" extends="blog">
+        <put name="body" value="/searchBlogsDialog.jsp"/>
+    </definition>
+    <definition name="displayBlog" extends="blog">
+        <put name="body" value="/displayBlog.jsp"/>
+    </definition>
+    <definition name="createBlog" extends="blog">
+        <put name="body" value="/createBlogDialog.jsp"/>
+    </definition>
+    <definition name="navigateBlogs" page="/blogs/navigateBlogsLayout">
+        <put name="searchBox" value="/searchBlogsDialog.jsp"/>
+    </definition>
+</tiles-definitions>

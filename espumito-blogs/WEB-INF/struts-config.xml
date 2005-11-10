@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+    <form-beans>
+        <form-bean name="addBlogEntry" type="ar.com.espumito.blogs.web.AddBlogEntryForm"/>
+        <form-bean name="addComment" type="ar.com.espumito.blogs.web.AddCommentForm"/>
+        <form-bean name="displayBlogEntry" type="ar.com.espumito.blogs.web.DisplayBlogEntryForm"/>
+        <form-bean name="navigateBlogs" type="ar.com.espumito.blogs.web.NavigateSearchForm"/>
+        <form-bean name="createBlog" type="ar.com.espumito.blogs.web.CreateBlogForm"/>
+        <form-bean name="blogIdForm" type="ar.com.espumito.blogs.web.BlogIdForm"/>
+    </form-beans>
+    <global-exceptions>
+    </global-exceptions>
+    <global-forwards>
+        <forward name="index" path="/index.do"/>
+        <forward name="no.blog.selected" path="/error/noBlogSelected.jsp"/>
+        <forward name="displayBlogEntry" path="/display.do?method=displayEntry" redirect="true"/>
+    </global-forwards>
+    <action-mappings>
+    	<action
+    	    path="/addComment"
+    		type="ar.com.espumito.blogs.web.AddCommentAction"
+    		name="addComment"
+    		input="/addComment.jsp"
+    		validate="true"
+    		scope="session"
+    		parameter="method">
+    		<forward name="showForm" path="/addComment.jsp"/>
+		</action>
+    	<action
+    	    path="/navigateBlogs"
+    		type="ar.com.espumito.blogs.web.NavigateBlogsAction"
+    		name="navigateBlogs"
+    		scope="session"
+    		parameter="method">
+    		<forward name="displayBlogs" path="/displayBlogs.do"/>
+		</action>
+    	<action
+    	    path="/displayBlog"
+    	    type="ar.com.espumito.blogs.web.BlogAction"
+    	    name="blogIdForm"
+    	    parameter="view">
+    	    <forward
+    	        name="viewBlog"
+    	        path="/showBlog.do">
+    	    </forward>
+    	</action>
+
+        <!-- Forwards -->
+    	<action
+            path="/index"
+    	    type="org.apache.struts.actions.ForwardAction"
+    	    parameter="home"/>
+        <action 
+            path="/searchBlogs"
+            type="org.apache.struts.actions.ForwardAction"
+            parameter="searchBlogs"/>
+        <action 
+            path="/createBlogDialog"
+            type="org.apache.struts.actions.ForwardAction"
+            parameter="createBlog"/>
+        <action 
+            path="/displayBlogs"
+            type="org.apache.struts.actions.ForwardAction"
+            parameter="displayBlogs"/>
+        <action 
+            path="/showBlog"
+            type="org.apache.struts.actions.ForwardAction"
+            parameter="showBlog"/>
+    </action-mappings>
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" forwardPattern="$M$P"/>
+    <message-resources parameter="ar.com.espumito.blogs.web.BlogMessages" 
+        null="false"/>
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" 
+            value="/WEB-INF/tiles-defs.xml" />
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+</struts-config>

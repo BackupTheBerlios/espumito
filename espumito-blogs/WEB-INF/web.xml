@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app id="WebApp_ID">
+	<display-name>espumito-blogs</display-name>
+	<!-- 
+	<filter>
+	   <filter-name>Test Filter</filter-name>
+	   <filter-class>ar.com.espumito.blogs.web.TestFilter</filter-class>
+	</filter>
+	-->
+	<filter>
+	    <filter-name>BlogRequestFilter</filter-name>
+	    <filter-class>ar.com.espumito.blogs.web.RequestWrapperFilter</filter-class>
+	    <init-param>
+	        <param-name>requestClass</param-name>
+	        <param-value>ar.com.espumito.blogs.web.DummyRequest</param-value>
+	    </init-param>
+	</filter>
+	<filter-mapping>
+	    <filter-name>BlogRequestFilter</filter-name>
+	    <url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<!-- 
+	<filter-mapping>
+	    <filter-name>Test Filter</filter-name>
+	    <url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	-->
+	<servlet>
+        <servlet-name>struts</servlet-name>
+        <description>Struts servlet</description>
+        <servlet-class>
+            org.apache.struts.action.ActionServlet
+        </servlet-class>
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>/WEB-INF/struts-config.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>struts</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+	<welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+    <taglib>
+        <taglib-uri>/tags/struts-bean</taglib-uri>
+        <taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>/tags/struts-html</taglib-uri>
+        <taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>/tags/struts-logic</taglib-uri>
+        <taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>/tags/struts-nested</taglib-uri>
+        <taglib-location>/WEB-INF/struts-nested.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>/tags/struts-tiles</taglib-uri>
+        <taglib-location>/WEB-INF/struts-tiles.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>/tags/espumito-blogs</taglib-uri>
+        <taglib-location>/WEB-INF/tags/espumito-blogs.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>/tags/espumito-core</taglib-uri>
+        <taglib-location>/WEB-INF/tags/espumito-core.tld</taglib-location>
+    </taglib>
+</web-app>
