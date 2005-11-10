@@ -92,7 +92,7 @@ public class MockSecuritySvc implements SecuritySvc {
     }
 
     private void loadRoleGroups() throws IOException {
-        loadMap(users, "roleGroups.properties", new ObjectFactory() {
+        loadMap(roleGroups, "roleGroups.properties", new ObjectFactory() {
             public Object getObject(String property) {
                 StringTokenizer tokenizer = new StringTokenizer(property, ",");
                 RoleGroupVO vo = new RoleGroupVO();
@@ -124,7 +124,7 @@ public class MockSecuritySvc implements SecuritySvc {
     }
 
     private void loadUsers() throws IOException {
-        loadMap(roles, "users.properties", new ObjectFactory() {
+        loadMap(users, "users.properties", new ObjectFactory() {
             private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
             public Object getObject(String property) {

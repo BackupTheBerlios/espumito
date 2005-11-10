@@ -1,4 +1,5 @@
 ## ANT buildfile template
+<?xml version="1.0" encoding="UTF-8"?>
 <project name="$projectName" basedir="." default="build">
 
     <property environment="env"/>
@@ -14,10 +15,11 @@
     
     <property name="project.name" value="$projectName"/>   
     <property name="projects.home" value="$projectsHome"/>
+    <property name="tools.home" value="${projects.home}/espumito-tools"/>
     <property file="${basedir}/${projectName}.properties"/>
-    <property file="${projects.home}/common.properties"/>
-    <property file="${projects.home}/xdoclet.properties"/>
-    <property file="${projects.home}/blah-j2ee.properties"/>
+    <property file="${tools.home}/common.properties"/>
+    <property file="${tools.home}/xdoclet.properties"/>
+    <property file="${tools.home}/blah-j2ee.properties"/>
 
 	<path id="project.custom.classpath">
 		<!-- Agregar librerias y classes propias del proyecto aqui -->

@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="/tags/struts-bean" prefix="bean" %>
 <div style="text-align:center;">
-<h1><bean:message key="welcome" /></h1>
+<h1><bean:message bundle="portal" key="welcome" /></h1>
 <br>
 <h3>El &uacute;nico sitio de toda, toda Internet que no hace promesas,
 simplemente porque no podr&iacute;amos cumplirlas.</h3>

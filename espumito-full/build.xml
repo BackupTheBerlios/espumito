@@ -13,11 +13,12 @@
 
 	<property name="project.name" value="espumito-full" />
 	<property name="projects.home" value="${env.PROJECTS_HOME}" />
+    <property name="tools.home" value="${projects.home}/espumito-tools"/>
 	<property file="${basedir}/espumito-full.properties" />
 	<property file="${basedir}/securityfilter.properties" />
-	<property file="${projects.home}/common.properties" />
-	<property file="${projects.home}/xdoclet.properties" />
-	<property file="${projects.home}/blah-j2ee.properties" />
+    <property file="${tools.home}/common.properties"/>
+    <property file="${tools.home}/xdoclet.properties"/>
+    <property file="${tools.home}/blah-j2ee.properties"/>
 
 	<path id="project.custom.classpath">
 		<!-- Agregar librerias y classes propias del proyecto aqui -->
@@ -30,6 +31,7 @@
 		<pathelement location="${junit.lib.dir}/junit.jar" />
 		<pathelement location="${blah-j2ee.lib.dir}/blah-j2ee-ejb.jar" />
 		<pathelement location="${blah-j2ee.lib.dir}/blah-j2ee-client.jar" />
+		<pathelement location="${espumito-core.lib.dir}/espumito-core.jar" />
 	</path>
 
 	<path id="xdoclet.classpath">
@@ -66,7 +68,7 @@
 	<target name="build" depends="compile,build-war" description="Produces distributable JARs and WARs.">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${tmp.dir}" />
-		<copy todir="${tmp.dir}" file="${projects.home}/espumito-core/build/espumito_core.jar" />
+		<copy todir="${tmp.dir}" file="${espumito-core.lib.dir}/espumito_core.jar" />
 		<jar file="${tmp.dir}/espumito_core.jar" update="true">
 			<manifest>
 				<attribute name="Class-Path" value="blah-j2ee.jar spring.jar spring-hibernate.jar commons-dbcp.jar commons-pool.jar" />
@@ -86,23 +88,40 @@
 	<target name="build-war" description="Creates a .WAR file with all included modules">
 		<mkdir dir="${tmp.dir}" />
 		<war destfile="${tmp.dir}/espumito.war" webxml="WEB-INF/web.xml">
-			<zipfileset dir="${web.content.dir}" includes="**/*.jsp,**/*.html,**/*.gif,**/*.jpg,**/*.css" />
+			<zipfileset dir="${web.content.dir}" includes="**/*.jsp,**/*.html,**/*.gif,**/*.jpg,**/*.css,**/*.js" />
 			<zipfileset dir="WEB-INF" prefix="WEB-INF" includes="**/*.xml,**/*.tld" excludes="web.xml" />
 			<zipfileset dir="${src.dir}" includes="**/*.properties" prefix="WEB-INF/classes" />
 
-			<zipfileset dir="${espumito-core.web-content.dir}" includes="**/*" prefix="core" />
+			<zipfileset dir="${espumito-core.web-content.dir}" includes="**/*" excludes="tags/*.tld" prefix="core" />
 			<zipfileset dir="${espumito-core.web-inf.dir}" includes="struts-config.xml" prefix="WEB-INF/core" />
+			<zipfileset dir="${espumito-core.taglibs.dir}" includes="*.tld" prefix="WEB-INF/tags" />
+
+			<zipfileset dir="${espumito-blogs.web-content.dir}" includes="**/*" excludes="tags/*.tld" prefix="blogs" />
+			<zipfileset dir="${espumito-blogs.web-inf.dir}" includes="struts-config.xml" prefix="WEB-INF/blogs" />
+			<zipfileset dir="${espumito-blogs.taglibs.dir}" includes="*.tld" prefix="WEB-INF/tags" />
+
+			<zipfileset dir="${espumito-reflexion.web-content.dir}" includes="**/*" excludes="tags/*.tld" prefix="reflexion" />
+			<zipfileset dir="${espumito-reflexion.web-inf.dir}" includes="struts-config.xml" prefix="WEB-INF/reflexion" />
+			<zipfileset dir="${espumito-reflexion.taglibs.dir}" includes="*.tld" prefix="WEB-INF/tags" />
 
 			<zipfileset dir="${struts.lib.dir}" includes="*.jar" prefix="WEB-INF/lib" />
 			<zipfileset dir="${securityfilter.lib.dir}" includes="*.jar" prefix="WEB-INF/lib" />
-			<zipfileset dir="${espumito-core.home}/bin"
+			
+			<zipfileset dir="${espumito-core.bin.dir}"
                 includes="**/*.class,**/*.xml,**/*.properties"
                 prefix="WEB-INF/classes">
 			</zipfileset>
+
+			<zipfileset dir="${espumito-blogs.bin.dir}"
+                includes="**/*.class,**/*.xml,**/*.properties"
+                prefix="WEB-INF/classes">
+			</zipfileset>
+			
 			<manifest>
 				<attribute name="Class-Path" value="blah-j2ee.jar spring.jar spring-hibernate.jar commons-dbcp.jar commons-pool.jar" />
 			</manifest>
 		</war>
+
 	</target>
 
 	<target name="clean" description="Deletes all generated files and directories.">

@@ -3,7 +3,7 @@
     <property environment="env"/>
     
     <!--
-    Acá va la parte customizada para el modulo
+    Acï¿½ va la parte customizada para el modulo
     -->
  
     
@@ -30,6 +30,7 @@
         <pathelement location="${junit.lib.dir}/junit.jar"/>
         <pathelement location="${blah-j2ee.lib.dir}/blah-j2ee-ejb.jar"/>
         <pathelement location="${blah-j2ee.lib.dir}/blah-j2ee-client.jar"/>
+        <pathelement location="${espumito-core.lib.dir}/espumito-core.jar"/>
 	</path>
 		
 	<path id="xdoclet.classpath">
@@ -43,6 +44,20 @@
         </fileset>
     </path>
 	
+	<taskdef
+        classpathref="xdoclet.classpath"
+        classname="xdoclet.modules.web.WebDocletTask"
+        name="webdoclet"/>
+	
+	<fileset id="tagshandlers.src" dir="${src.dir}" includes="**/*TagHandler.java"/>
+	 
+	<target name="prepare" depends="prepare.generate">
+	</target>
+		
+	<target name="prepare.generate">
+		<mkdir dir="${generated.dir}"/>
+	</target>
+	
     <target name="compile" depends="generate" description="Compiles all sources, including generated ones.">
 		<mkdir dir="${bin.dir}"/>
 		<javac
@@ -52,11 +67,21 @@
 			debug="true"
 			debuglevel="source"
 			deprecation="true"
-			listfiles="true"/>
+			listfiles="true"
+    		target="1.4"/>
     </target>
 	
-	<target name="generate" description="Generates sources.">
-		<mkdir dir="${generated.dir}"/>
+	<target name="generate" description="Generates sources." depends="prepare.generate">
+		<antcall target="generate.taglibs"></antcall>
+	</target>
+	
+	<target name="generate.taglibs" description="Generates taglibs descriptors." depends="prepare.generate">
+		<property name="taglibs.tld.dir" value="${gen-src.dir}/WEB-INF/tags"/>
+		<mkdir dir="${taglibs.tld.dir}"/>
+		<webdoclet destDir="${taglibs.tld.dir}">
+			<fileset refid="tagshandlers.src"/>
+			<jsptaglib shortName="espumito-blogs" filename="${project.name}.tld"/>
+		</webdoclet>
 	</target>
     
     <target name="javadoc" depends="generate" description="Generates JavaDoc documentation.">

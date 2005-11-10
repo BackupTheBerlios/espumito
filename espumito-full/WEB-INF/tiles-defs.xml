@@ -3,10 +3,36 @@
 <component-definitions>
 	<definition name="basic" page="/layout/basicLayout.jsp">
 		<put name="header" value="/header.jsp"></put>
-		<put name="menu" value="/menu.jsp"></put>
+		<put name="menu" value="/menu/sectionsMenu.jsp"></put>
+		<put name="adminMenu" value="/menu/adminMenu.jsp"></put>
 		<put name="footer" value="/footer.jsp"></put>
 	</definition>
 	<definition name="default.defaultLayout" extends="basic">
 		<put name="body" value="/main.jsp"></put>
 	</definition>
+	
+    <definition name="blog" extends="basic">
+        <put name="sectionMenu" value="/blogs/navMenu.jsp"/>
+    </definition>
+    <definition name="home" extends="blog">
+        <put name="body" value="/blogs/home.jsp"/>
+        <put name="sectionName" type="string" value="blog.sectionName"/>
+    </definition>
+    <definition name="searchBlogs" extends="blog">
+        <put name="body" value="/blogs/searchBlogsDialog.jsp"/>
+    </definition>
+    <definition name="createBlog" extends="blog">
+        <put name="body" value="/blogs/createBlogDialog.jsp"/>
+    </definition>
+    <definition name="displayBlogs" extends="blog">
+        <put name="body" value="displayBlogsBody"/>
+    </definition>
+    <definition name="displayBlogsBody" page="/blogs/navigateBlogsLayout.jsp">
+        <put name="searchBox" value="/blogs/searchBlogsDialog.jsp"/>
+        <put name="displayBlogs" value="/blogs/displayBlogs.jsp"/>
+    </definition>
+    <definition name="blogEntry" page="/blogs/blogEntryLayout.jsp"/>
+    <definition name="showBlog" extends="blog">
+        <put name="body" value="/blogs/displayBlog.jsp"/>
+    </definition>
 </component-definitions>

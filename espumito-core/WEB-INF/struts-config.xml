@@ -12,7 +12,9 @@
 			type="ar.com.espumito.security.web.EditUserForm" />
 	</form-beans>
 	<global-forwards>
-		<forward name="failure" path="/standardError.jsp" />
+		<forward name="failure" path="/standardError.jsp" /><forward
+			name="home" path="/" contextRelative="true" redirect="true">
+</forward>
 	</global-forwards>
 	<action-mappings>
 		<action scope="request" path="/security/register"
@@ -23,25 +25,24 @@
 		</action>
 		<action scope="request" path="/security/logout"
 			type="ar.com.espumito.security.web.LogoutAction" validate="false">
-			<forward name="success" path="/index.jsp" />
+			<forward name="success" contextRelative="true" path="/"/>
 		</action>
-		<action scope="request" path="/security/admin/usersAdmin"
+		<action scope="request" path="/admin/usersAdmin"
 			type="ar.com.espumito.security.web.ListUsersAction"
 			validate="false">
 			<forward name="success"
-				path="/security/admin/usersAdmin.jsp" />
+				path="/admin/usersAdmin.jsp" />
 		</action>
-		<action scope="request" path="/security/admin/editUserStep1"
+		<action scope="request" path="/admin/editUserStep1"
 			type="ar.com.espumito.security.web.EditUserFillFormAction"
-			name="editUser" input="/security/admin/editUser.jsp"
-			validate="false">
-			<forward name="success" path="/security/admin/editUser.jsp" />
+			name="editUser">
+			<forward name="success" path="/admin/editUser.jsp" />
 		</action>
-		<action scope="request" path="/security/admin/editUserStep2"
+		<action scope="request" path="/admin/editUserStep2"
 			type="ar.com.espumito.security.web.EditUserAction" name="editUser"
-			input="/security/admin/editUser.jsp" validate="true">
+			input="/admin/editUser.jsp" validate="true">
 			<forward name="success"
-				path="/security/admin/usersAdmin.do" />
+				path="/admin/usersAdmin.do" />
 		</action>
 		<action scope="request" path="/recoverPassword"
 			type="ar.com.espumito.security.web.RecoverPasswordAction"
@@ -49,9 +50,11 @@
 			<forward name="success"
 				path="/registration/passwordSent.jsp" />
 		</action>
+		<!-- Module switching --><action path="/home" type="org.apache.struts.actions.SwitchAction"></action>
 	</action-mappings>
-	<message-resources parameter="ar.com.espumito.web.SecurityResources"
-		null="false" key="security" />
+	<message-resources parameter="ar.com.espumito.core.web.EspumitoCoreResources" null="false">
+	</message-resources>
+	<message-resources parameter="ar.com.espumito.security.web.SecurityMessageResources" null="false" key="security"> </message-resources>
 	<plug-in className="org.apache.struts.tiles.TilesPlugin">
 		<set-property property="definitions-config"
 			value="/WEB-INF/tiles-defs.xml" />

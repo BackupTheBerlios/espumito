@@ -5,7 +5,7 @@
 <%@ taglib uri="/tags/struts-logic" prefix="logic" %>
 <tiles:insert definition="basic">
 	<tiles:put name="pageName" type="string">
-		<bean:message key="recoverPwd.title"/>
+		<bean:message bundle="security" key="recoverPwd.title"/>
 	</tiles:put>
 	<tiles:put name="body" type="string">
 	</tiles:put>

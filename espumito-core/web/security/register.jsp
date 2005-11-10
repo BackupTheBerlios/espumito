@@ -5,7 +5,7 @@
 <%@ taglib uri="/tags/struts-logic" prefix="logic" %>
 <tiles:insert definition="basic">
 	<tiles:put name="pageName" type="string">
-		<bean:message key="register.title"/>
+		<bean:message bundle="security" bundle="security" key="register.title"/>
 	</tiles:put>
 	<tiles:put name="body" type="string">
 		<logic:messagesPresent>
@@ -18,35 +18,35 @@
 		<html:form action="/security/register">
 			<table width="100%" >
 				<tr>
-					<td width="20%"><bean:message key="register.username"/></td>
+					<td width="20%"><bean:message bundle="security" bundle="security" key="register.username"/></td>
 					<td><html:text property="username" size="15"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="register.password"/></td>
+					<td><bean:message bundle="security" bundle="security" key="register.password"/></td>
 					<td><html:password property="password" size="15"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="register.passwordCheck"/></td>
+					<td><bean:message bundle="security" bundle="security" key="register.passwordCheck"/></td>
 					<td><html:password property="passwordCheck" redisplay="false" size="15"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="register.email"/></td>
+					<td><bean:message bundle="security" bundle="security" key="register.email"/></td>
 					<td><html:text property="email" size="60"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="register.emailCheck"/></td>
+					<td><bean:message bundle="security" bundle="security" key="register.emailCheck"/></td>
 					<td><html:text property="emailCheck" size="60"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="register.firstName"/></td>
+					<td><bean:message bundle="security" bundle="security" key="register.firstName"/></td>
 					<td><html:text property="firstName" size="45"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="register.lastName"/></td>
+					<td><bean:message bundle="security" bundle="security" key="register.lastName"/></td>
 					<td><html:text property="lastName" size="45"/></td>
 				</tr>
 				<tr>
-					<td><bean:message key="register.displayName"/></td>
+					<td><bean:message bundle="security" bundle="security" key="register.displayName"/></td>
 					<td><html:text property="displayName" size="45"/></td>
 				</tr>
 			</table>

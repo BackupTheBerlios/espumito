@@ -2,7 +2,8 @@
 
     <property environment="env"/>
     <property name="project.name" value="blah-j2ee"/>   
-    <property name="projects.home" value="c:/proyectos"/>
+    <property name="projects.home" value="${basedir}/.."/>
+    <property file="${basedir}/blah-j2ee.properties"/>
     <property file="${projects.home}/common.properties"/>
     <property file="${projects.home}/xdoclet.properties"/>
     <property file="${projects.home}/blah-j2ee.properties"/>
@@ -113,6 +114,11 @@
         <mkdir dir="${build.dir}"/>   
         <jar destfile="${distributable.filename}">
             <fileset dir="${bin.dir}" includes="**/*.class"/>
+			<manifest>
+				<attribute
+					name="Extension-name"
+					value="ar.org.blah-j2ee"/>
+			</manifest>
         </jar>
     </target>
     

@@ -5,18 +5,18 @@
 <%@ taglib uri="/tags/struts-logic" prefix="logic"%>
 <tiles:insert definition="basic">
 	<tiles:put name="body" type="string">
-		<h2><bean:message key="login.mustLogin" /></h2>
+		<h2><bean:message bundle="security" key="login.mustLogin" /></h2>
 		<form id="loginForm" action="j_security_check" method="POST">
 		<table class="login">
 			<tr>
-				<td><bean:message key="login.username" /></td>
+				<td><bean:message bundle="security"  key="login.username" /></td>
 				<td><input name="j_username" type="text" maxlength="15"></td>
 			</tr>
 			<tr>
-				<td><bean:message key="login.password" /></td>
+				<td><bean:message bundle="security"  key="login.password" /></td>
 				<td><input name="j_password" type="password" maxlength="15"></td>
 			</tr>
 		</table>
-		<input type="submit" value="<bean:message key='login.login'/>"></form>
+		<input type="submit" value="<bean:message bundle="security" key='login.login'/>"></form>
 	</tiles:put>
 </tiles:insert>

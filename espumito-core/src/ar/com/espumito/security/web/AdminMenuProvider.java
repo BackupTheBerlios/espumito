@@ -16,7 +16,7 @@ public class AdminMenuProvider extends DefaultMenuProvider {
 
 	protected Menu createMenu(HttpServletRequest pRequest) {
 		Principal user = pRequest.getUserPrincipal();
-		logger.debug("Creating sections menu for principal " + user);
+		logger.debug("Creating admin menu for principal " + user);
 		DefaultMenu menu = new DefaultMenu("espumito.admin.menu.title");
 		SimpleMenuItem item = new SimpleMenuItem();
 		item.setLink("/core/admin/usersAdmin.do");
