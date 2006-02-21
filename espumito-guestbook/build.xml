@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="espumito-guestbook" basedir="." default="build">
+
+    <property environment="env"/>
+    
+    <!--
+    Acá va la parte customizada para el modulo
+    -->
+ 
+    
+    <!--
+    Fin de la parte customizada para el modulo
+    -->   
+    
+    <property name="project.name" value="espumito-guestbook"/>   
+    <property name="projects.home" value="../"/>
+    <property name="tools.home" value="${projects.home}/espumito-tools"/>
+    <property file="${basedir}/espumito-guestbook.properties"/>
+    <property file="${tools.home}/common.properties"/>
+    <property file="${tools.home}/xdoclet.properties"/>
+    <property file="${tools.home}/blah-j2ee.properties"/>
+
+	<path id="project.custom.classpath">
+		<!-- Agregar librerias y classes propias del proyecto aqui -->
+	</path>
+	
+	<path id="project.classpath.compile">
+        <pathelement location="${bin.dir}"/>
+        <pathelement location="${j2ee.lib.dir}/j2ee.jar"/>
+        <pathelement location="${log4j.lib.dir}/log4j-1.2.8.jar"/>
+        <pathelement location="${junit.lib.dir}/junit.jar"/>
+        <pathelement location="${blah-j2ee.lib.dir}/blah-j2ee-ejb.jar"/>
+        <pathelement location="${blah-j2ee.lib.dir}/blah-j2ee-client.jar"/>
+	</path>
+		
+	<path id="xdoclet.classpath">
+        <path refid="project.classpath.compile" />
+        <fileset dir="${xdoclet.lib.dir}">
+            <include name="*.jar" />
+            <exclude name="xdoclet-module-jboss-net-*.jar" />
+        </fileset>
+        <fileset dir="${xdoclet.lib.dir}">
+            <include name="xdoclet-module-jboss-net-${jboss.net.version}*.jar" />
+        </fileset>
+    </path>
+	
+    <target name="compile" depends="generate" description="Compiles all sources, including generated ones.">
+		<mkdir dir="${bin.dir}"/>
+		<javac
+			srcdir="src"
+			destdir="${bin.dir}"
+			classpathref="project.classpath.compile"
+			debug="true"
+			debuglevel="source"
+			deprecation="true"
+			listfiles="true"/>
+    </target>
+	
+	<target name="generate" description="Generates sources.">
+		<mkdir dir="${generated.dir}"/>
+	</target>
+    
+    <target name="javadoc" depends="generate" description="Generates JavaDoc documentation.">
+		<mkdir dir="${javadoc.dir}"/>
+        <javadoc destdir="${javadoc.dir}">
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+            <fileset dir="${gen-src.dir}" includes="**/*.java"/>
+        </javadoc>
+    </target>
+    
+    <target
+    	name="build"
+    	depends="compile"
+    	description="Produces distributable JARs and WARs.">
+        <mkdir dir="${build.dir}"/>   
+        <jar destfile="${distributable.filename}">
+            <fileset dir="${bin.dir}" includes="**/*.class"/>
+        </jar>
+    </target>
+    
+    <target name="clean" description="Deletes all generated files and directories.">
+		        <delete dir="${build.dir}"/>
+		        <delete dir="${bin.dir}"/>
+        <delete dir="${javadoc.dir}"/>
+        <delete dir="${generated-files.dir}"/>
+    </target>
+</project>
