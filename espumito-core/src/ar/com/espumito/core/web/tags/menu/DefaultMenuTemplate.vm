@@ -1,0 +1,20 @@
+<div
+	#if ($html)
+    #if ($html.id)id="$html.id"#end
+    #if ($html.style)style="${html.style}"#end
+    #if ($html.clazz)class="${html.clazz}"#end
+    #end
+    >
+    <table cellspacing="0">
+        <tr>
+            <th id="title">${menu.titleKey}</th>
+        </tr>
+        #foreach($item in $items)
+        <tr>
+            <td id="item">
+            	<a href="${item.url}">${item.title}</a>
+            </td>
+        </tr>
+        #end
+    </table>
+</div>

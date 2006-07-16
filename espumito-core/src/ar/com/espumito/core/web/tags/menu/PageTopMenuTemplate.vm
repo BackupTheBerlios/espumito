@@ -1,0 +1,18 @@
+<div
+	#if ($html)
+    #if ($html.id)id="$html.id"#end
+    #if ($html.style)style="${html.style}"#end
+    #if ($html.clazz)class="${html.clazz}"#end
+    #end
+    >
+    <table cellspacing="0" width="100%">
+        <tr>
+            <td id="title">${menu.title}</td>
+            <td id="menuItems">
+        #foreach($item in $items)
+            	<a href="${item.url}">${item.title}</a>&nbsp;
+        #end
+            </td>
+        </tr>
+    </table>
+</div>

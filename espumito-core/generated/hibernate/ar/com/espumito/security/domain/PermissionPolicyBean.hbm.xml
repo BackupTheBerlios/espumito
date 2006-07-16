@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="ar.com.espumito.security.domain.PermissionPolicyBean"
+        table="core_permission_policies"
+    >
+
+        <id
+            name="id"
+            column="id"
+            type="long"
+        >
+            <generator class="native">
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-PermissionPolicyBean.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <discriminator
+            column="type"
+        />
+
+        <property
+            name="description"
+            type="string"
+            update="true"
+            insert="true"
+            column="description"
+        />
+
+        <property
+            name="name"
+            type="string"
+            update="true"
+            insert="true"
+            column="name"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-PermissionPolicyBean.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+        <joined-subclass
+            name="ar.com.espumito.security.domain.DefaultPermissionPolicyBean"
+            table="core_default_permission_policies"
+        >
+            <key
+                column="id"
+            />
+
+        <many-to-one
+            name="anonymousRole"
+            class="ar.com.espumito.security.domain.RoleBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="anonymous_role_id"
+        />
+
+        </joined-subclass>
+        <joined-subclass
+            name="ar.com.espumito.security.domain.NewPermissionPolicyBean"
+            table="core_new_permission_policies"
+        >
+            <key
+                column="id"
+            />
+
+        <many-to-one
+            name="anonymousRole"
+            class="ar.com.espumito.security.domain.RoleBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="anonymous_role_id"
+        />
+
+        </joined-subclass>
+
+    </class>
+
+</hibernate-mapping>

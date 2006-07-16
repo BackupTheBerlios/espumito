@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+
+   <tlib-version>1.0</tlib-version>
+   <jsp-version>1.2</jsp-version>
+   <short-name>espumito-core</short-name>
+
+   <tag>
+
+      <name>menu</name>
+      <tag-class>ar.com.espumito.core.web.tags.menu.MenuTagHandler</tag-class>
+
+      <attribute>
+         <name>bundle</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>cssClass</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>cssStyle</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>id</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>localeKey</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>name</name>
+         <required>true</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>scope</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>rendererId</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+
+   </tag>
+   <tag>
+
+      <name>defineMap</name>
+      <tag-class>ar.com.espumito.core.web.tags.DefineMapTagHandler</tag-class>
+      <tei-class>ar.com.espumito.core.web.tags.DefineMapTagExtraInfo</tei-class>
+
+      <attribute>
+         <name>name</name>
+         <required>true</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>scope</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+
+   </tag>
+   <tag>
+
+      <name>mapValue</name>
+      <tag-class>ar.com.espumito.core.web.tags.MapValueTagHandler</tag-class>
+
+      <attribute>
+         <name>beanName</name>
+         <required>true</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>beanProperty</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>key</name>
+         <required>true</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>scope</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+
+   </tag>
+   <tag>
+
+      <name>formattedText</name>
+      <tag-class>ar.com.espumito.core.web.tags.FormattedTextTagHandler</tag-class>
+
+      <attribute>
+         <name>beanName</name>
+         <required>true</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>beanProperty</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>formatBeanName</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+      <attribute>
+         <name>formatBeanProperty</name>
+         <required>false</required>
+
+           <type>java.lang.String</type>
+
+      </attribute>
+
+   </tag>
+
+</taglib>

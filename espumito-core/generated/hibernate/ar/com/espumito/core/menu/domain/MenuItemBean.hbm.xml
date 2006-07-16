@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="ar.com.espumito.core.menu.domain.MenuItemBean"
+        table="core_menu_items"
+    >
+
+        <id
+            name="id"
+            column="id"
+            type="long"
+        >
+            <generator class="increment">
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-MenuItemBean.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <bag
+            name="items"
+            lazy="true"
+            inverse="true"
+            cascade="all"
+        >
+
+            <key
+                column="parent_item_id"
+            >
+            </key>
+
+            <one-to-many
+                  class="ar.com.espumito.core.menu.domain.MenuItemBean"
+            />
+
+      </bag>
+
+        <property
+            name="moduleId"
+            type="string"
+            update="true"
+            insert="true"
+            column="module_id"
+        />
+
+        <property
+            name="order"
+            type="integer"
+            update="true"
+            insert="true"
+            column="order_seq"
+        />
+
+        <many-to-one
+            name="securityObject"
+            class="ar.com.espumito.security.domain.SecurityObjectBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="security_object_id"
+        />
+
+        <property
+            name="titleKey"
+            type="string"
+            update="true"
+            insert="true"
+            column="title_key"
+        />
+
+        <property
+            name="url"
+            type="string"
+            update="true"
+            insert="true"
+            column="url"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-MenuItemBean.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+</hibernate-mapping>

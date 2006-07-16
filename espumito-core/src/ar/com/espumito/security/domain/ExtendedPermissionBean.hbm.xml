@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="ar.com.espumito.security.domain.ExtendedPermissionBean"
+        table="core_extended_permissions"
+    >
+
+        <id
+            name="id"
+            column="id"
+            type="long"
+        >
+            <generator class="native">
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-ExtendedPermissionBean.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <property
+            name="description"
+            type="string"
+            update="true"
+            insert="true"
+            column="description"
+        />
+
+        <property
+            name="name"
+            type="string"
+            update="true"
+            insert="true"
+            column="name"
+            unique="true"
+        /><set name="operations" table="core_extended_permissions_operations">
+            <key column="extended_permission_id"></key>
+            <many-to-many class="ar.com.espumito.security.domain.ExtendedPermissionBean" column="operation_id"
+                outer-join="auto">
+            </many-to-many>
+</set>
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-ExtendedPermissionBean.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+</hibernate-mapping>

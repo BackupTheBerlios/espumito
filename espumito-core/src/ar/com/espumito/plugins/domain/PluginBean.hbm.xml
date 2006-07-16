@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+<hibernate-mapping package="ar.com.espumito.plugins.domain">
+	<class name="PluginBean" table="core_plugins">
+		<id column="id" name="id" type="long">
+			<generator class="native"></generator>
+		</id>
+		<property name="name" column="name" type="string" unique="true"
+			not-null="true">
+		</property>
+		<property name="description" column="description" type="string"></property>
+		<property name="clazz" column="class" not-null="true" type="ar.com.espumito.support.hibernate.HibernateClassType"></property>
+	</class>
+</hibernate-mapping>

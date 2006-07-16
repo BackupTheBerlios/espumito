@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="ar.com.espumito.core.menu.domain.MenuBean"
+        table="core_menues"
+    >
+
+        <id
+            name="id"
+            column="id"
+            type="long"
+        >
+            <generator class="identity">
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-MenuBean.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <set
+            name="items"
+            lazy="false"
+            cascade="all"
+            sort="unsorted"
+            order-by="order_seq"
+        >
+
+            <key
+                column="menu_id"
+            >
+            </key>
+
+            <one-to-many
+                  class="ar.com.espumito.core.menu.domain.MenuItemBean"
+            />
+
+        </set>
+
+        <property
+            name="name"
+            type="string"
+            update="true"
+            insert="true"
+            column="name"
+        />
+
+        <many-to-one
+            name="securityObject"
+            class="ar.com.espumito.security.domain.SecurityObjectBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="security_object_id"
+        />
+
+        <property
+            name="titleKey"
+            type="string"
+            update="true"
+            insert="true"
+            column="titleKey"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-MenuBean.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+</hibernate-mapping>

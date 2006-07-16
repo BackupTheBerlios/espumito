@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="ar.com.espumito.security.domain.SecurityObjectBean"
+        table="core_security_objects"
+    >
+
+        <id
+            name="id"
+            column="id"
+            type="long"
+        >
+            <generator class="increment">
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-SecurityObjectBean.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <set
+            name="children"
+            lazy="false"
+            inverse="true"
+            cascade="all"
+            sort="unsorted"
+        >
+
+            <key
+                column="father_id"
+            >
+            </key>
+
+            <one-to-many
+                  class="ar.com.espumito.security.domain.SecurityObjectBean"
+            />
+
+        </set>
+
+        <property
+            name="description"
+            type="string"
+            update="true"
+            insert="true"
+            column="description"
+        />
+
+        <many-to-one
+            name="father"
+            class="ar.com.espumito.security.domain.SecurityObjectBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="father_id"
+        />
+
+        <property
+            name="name"
+            type="string"
+            update="true"
+            insert="true"
+            column="name"
+        />
+
+        <many-to-one
+            name="permissionPolicy"
+            class="ar.com.espumito.security.domain.PermissionPolicyBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="permission_policy_id"
+        />
+
+        <set
+            name="permissions"
+            lazy="false"
+            inverse="true"
+            cascade="all"
+            sort="unsorted"
+        >
+
+            <key
+                column="security_object_id"
+            >
+            </key>
+
+            <one-to-many
+                  class="ar.com.espumito.security.domain.PermissionBean"
+            />
+
+        </set>
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-SecurityObjectBean.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+</hibernate-mapping>

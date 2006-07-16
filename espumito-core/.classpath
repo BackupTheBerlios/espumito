@@ -9,5 +9,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/securityfilter-2.0"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/spring-1.2.8"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/struts-1.2.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/velocity-1.2"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

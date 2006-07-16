@@ -1,0 +1,14 @@
+¡Su cuenta en Espumito se ha creado correctamente!
+
+Si Ud. no se registró en Espumito, por favor elimine este correo.
+Si Ud. quiere activar su cuenta, ingrese a este link en su navegador:
+
+{$url}?username=${user.username}&hash=${hash}
+
+Tenga en cuenta que si no activa su cuenta, la misma será eliminada automáticamente dentro de 30 días.
+
+¡Disfrute de nuestro sitio!
+
+Espumito
+
+http://espumito.no-ip-org

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+<hibernate-mapping package="ar.com.espumito.plugins.domain">
+	<class name="SocketBean" table="core_sockets">
+		<id column="id" name="id" type="long">
+			<generator class="native"></generator>
+		</id>
+		<property name="name" column="name" not-null="true"
+			unique="true">
+		</property>
+		<property name="description"></property>
+		<property name="clazz" column="class" not-null="true"
+			type="ar.com.espumito.support.hibernate.HibernateClassType">
+		</property>
+		<joined-subclass name="MultiSocketBean" table="core_multi_sockets">
+			<key column="id"></key>
+			<map name="plugins">
+				<key column="socket_id"></key>
+				<index column="name" type="string"></index>
+				
+				<one-to-many class="PluginBean" />
+				
+			</map>
+		</joined-subclass>
+		<joined-subclass name="SimpleSocketBean" table="core_simple_sockets">
+			<key column="id"></key>
+			<many-to-one name="plugin" column="plugin_id" class="PluginBean"></many-to-one>
+			
+
+		</joined-subclass>
+	</class>
+</hibernate-mapping>

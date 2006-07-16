@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping
+>
+    <class
+        name="ar.com.espumito.security.domain.PermissionBean"
+        table="core_permissions"
+    >
+
+        <id
+            name="id"
+            column="id"
+            type="long"
+        >
+            <generator class="native">
+              <!--  
+                  To add non XDoclet generator parameters, create a file named 
+                  hibernate-generator-params-PermissionBean.xml 
+                  containing the additional parameters and place it in your merge dir. 
+              --> 
+            </generator>
+        </id>
+
+        <many-to-one
+            name="deleteOperation"
+            class="ar.com.espumito.security.domain.OperationBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="delete_operation_id"
+        />
+
+        <many-to-one
+            name="executeOperation"
+            class="ar.com.espumito.security.domain.OperationBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="execute_operation_id"
+        />
+
+        <set name="extendedPermissions" table="core_permission_extended_permissions" lazy="true" cascade="none">
+            <key column="permission_id"></key>
+            <many-to-many class="ar.com.espumito.security.domain.ExtendedPermissionBean" column="extended_permission_id"
+                outer-join="auto" />
+        </set>
+
+        <many-to-one
+            name="readOperation"
+            class="ar.com.espumito.security.domain.OperationBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="read_operation_id"
+        />
+
+        <many-to-one
+            name="role"
+            class="ar.com.espumito.security.domain.RoleBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="role_id"
+        />
+
+        <many-to-one
+            name="writeOperation"
+            class="ar.com.espumito.security.domain.OperationBean"
+            cascade="none"
+            outer-join="auto"
+            update="true"
+            insert="true"
+            column="write_operation_id"
+        />
+
+        <property
+            name="delete"
+            type="boolean"
+            update="true"
+            insert="true"
+            column="is_delete"
+        />
+
+        <property
+            name="execute"
+            type="boolean"
+            update="true"
+            insert="true"
+            column="is_execute"
+        />
+
+        <property
+            name="read"
+            type="boolean"
+            update="true"
+            insert="true"
+            column="is_read"
+        />
+
+        <property
+            name="write"
+            type="boolean"
+            update="true"
+            insert="true"
+            column="is_write"
+        />
+
+        <!--
+            To add non XDoclet property mappings, create a file named
+                hibernate-properties-PermissionBean.xml
+            containing the additional properties and place it in your merge dir.
+        -->
+
+    </class>
+
+</hibernate-mapping>
