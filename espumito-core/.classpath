@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate-2.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javamail-1.4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jboss-j2ee"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/logging-log4j-1.2.13"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/securityfilter-2.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/spring-1.2.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/struts-1.2.7"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
